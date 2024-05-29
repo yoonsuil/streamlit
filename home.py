@@ -1,4 +1,6 @@
 import streamlit as st 
+import pandas as pd  #csv 파일 불러오려면 
+import matplotlib as plt
 
 
 def bmi_range(bmi):
@@ -33,6 +35,24 @@ if selected == "체질량 계산기":
         
 if selected =="gapminder":
     st.title('gapminder')
+    
+    st.write("파일 불러오기")
+    data =pd.read_csv("gapminder.csv")
+    
+    year = st.slider("Select a Year",1952,2007,1952,step=5)
+    st.write(f"{year}년도")
+    
+    data = data[data["year"]== year]
+    
+    #st.write(data)
+    
+    #fig, ax = plt.subplots()
+    #ax.scatter(data['gdpPercap'], data['LifeExp'], s= data['pop']*0.000002)  #s 는 데이터 사이즈 조정   
+    #st.pyplot(fig)
+    
+    df= data[['gdpPercap','lifeExp']]
+    st.scatter_chart(df)
+    st.write(df)
     
 if selected =="국가별통계":
     st.title("국가별통계")
